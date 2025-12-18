@@ -14,27 +14,22 @@ My core interest lies in **robotic systems** where **mechanical design, electron
 
 ### 🤖 Robotics
 
-* Mobile robots (ground-based)
-* Actuation mechanisms
-* Sensor integration
 * Kinematic modeling and validation
-* Simulation-first development before hardware build
+* Robot Arms
+* UAV development
 
 ### ⚙️ Mechanical Design
 
 * Parametric part and assembly design
 * Mechanism design (linkages, joints, frames)
-* Design for manufacturing (DFM)
 * Design for additive manufacturing (3D printing)
-* Structural and fitment considerations
+* Drivetrain design
 
 ### 🔌 Electronics Design
 
 * Schematic design
-* Power electronics basics (regulation, protection)
-* Motor driver interfacing
+* Motor driver boards
 * Sensor circuits
-* Embedded-system-friendly designs
 
 ### 🧪 Simulation & Validation
 
