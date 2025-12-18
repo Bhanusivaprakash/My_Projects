@@ -1,0 +1,20 @@
+Assignment - Design a 3R SPOT robot.
+
+Drive-train:
+Maxon EC-I 52 420w BLDC, coupled to a 2 stage planetary gearbox with fixed ring.
+
+Stall Torque = 4860 mNm
+Continuous Torque = 1050 mNm
+Max. speed = 6000 rpm
+
+Sun gear: module = 1.75, 12 teeth
+Planet gear: module = 1.75, 36 teeth
+Ring gear: module = 1.75, 84 teeth
+
+Stage ratio = 1 + (ring/sun) = 1 + (84/12) = 8
+
+2 stages -> Overall ratio = 1 : (8 * 8) = 1 : 64
+
+Output speed (2 stage gearbox) = 6000/64 = 93.75 RPM
+Continuous output torque = 1.050 * 64 = 67.2 Nm
+Stall output torque = 4.86 * 64 = 311.04 Nm
