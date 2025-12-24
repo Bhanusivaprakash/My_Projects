@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<robot name="robot_platform">
+
+  <!-- Materials -->
+  <material name="grey">
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+
+  <!-- World link -->
+  <link name="world"/>
+
+  <!-- Fixed joint connecting world to base_link -->
+  <joint name="fixed_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Base platform using mesh -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_chassis.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_chassis.stl" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <!-- Robot arm base link on top of chassis -->
+  <link name="arm_base">
+    <visual>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_arm_base.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/> <!-- adjust height so it sits on top of base_link -->
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_arm_base.stl" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <!-- Fixed joint connecting base_link to arm_base -->
+  <joint name="fixed_joint_arm_base" type="fixed">
+    <parent link="base_link"/>
+    <child link="arm_base"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+    <!-- Robot base joint link on top of arm_base -->
+  <link name="robot_base_joint">
+    <visual>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_base_joint.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"/>
+      <origin xyz="0 0 11" rpy="0 0 0"/> <!-- place on top of arm_base -->
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_base_joint.stl" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 11" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <!-- Revolute continuous joint connecting arm_base to robot_base_joint -->
+  <joint name="joint_robot_base" type="continuous">
+    <parent link="arm_base"/>
+    <child link="robot_base_joint"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> <!-- align child frame with top of arm_base -->
+    <axis xyz="0 0 11"/>
+  </joint>
+
+  <!-- Arm_Link_1 -->
+  <link name="robot_arm_link_1">
+    <visual>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_link_1.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"/>
+      <origin xyz="0 0 -38.5" rpy="0 0 0"/> <!-- place on top of arm_base -->
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_link_1.stl" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 -38.5" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <!-- Revolute continuous joint connecting arm_base to robot_base_joint -->
+  <joint name="joint_robot_link_1" type="continuous">
+    <parent link="robot_base_joint"/>
+    <child link="robot_arm_link_1"/>
+    <origin xyz="0 0 41" rpy="0 0 0"/> <!-- align child frame with top of arm_base -->
+    <axis xyz="0 1 0"/>
+  </joint>
+
+ <!-- Joint_2 -->
+  <link name="robot_joint_2">
+    <visual>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_base_joint.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"/>
+
+      <!-- shift mesh DOWN so the joint axis is at the TOP -->
+      <origin xyz="0 0 -30" rpy="0 0 0"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_base_joint.stl" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 -30" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="joint_robot_base_2" type="continuous">
+    <parent link="robot_arm_link_1"/>
+    <child link="robot_joint_2"/>
+
+    <!-- joint stays at 0,0,0 -->
+    <origin xyz="-31 0 96" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Link_2 -->
+  <link name="robot_arm_link_2">
+    <visual>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_link_2.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"/>
+
+      <!-- shift mesh DOWN so the joint axis is at the TOP -->
+      <origin xyz="0 0 -20" rpy="3.14159 0 0"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_link_2.stl" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 -20" rpy="3.14159 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="joint_robot_link_2" type="continuous">
+    <parent link="robot_joint_2"/>
+    <child link="robot_arm_link_2"/>
+
+    <!-- joint stays at 0,0,0 -->
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- Gripper -->
+  <link name="gripper_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_gripper.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey"/>
+
+      <!-- shift mesh DOWN so the joint axis is at the TOP -->
+      <origin xyz="0 0 30" rpy="3.14159 0 1.57"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://robot_arm/meshes/robot_gripper.stl" scale="1 1 1"/>
+      </geometry>
+      <origin xyz="0 0 30" rpy="3.14159 0 1.57"/>
+    </collision>
+  </link>
+
+  <joint name="gripper_joint" type="continuous">
+    <parent link="robot_arm_link_2"/>
+    <child link="gripper_link"/>
+
+    <!-- joint stays at 0,0,0 -->
+    <origin xyz="0 0 -70" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+
+</robot>
